@@ -6,6 +6,7 @@ import { menuCategories as fallbackCategories, wineList, type MenuCategory, type
 import { resolveBackendUrl } from "@/lib/api";
 import { wineService } from "@/lib/wineService";
 import logo from "@/assets/logo.png";
+import menuHeroImage from "@/assets/menu/primi-risotto.jpg";
 import MenuItemModal from "@/components/MenuItemModal";
 import WineModal from "@/components/WineModal";
 import type { WineModalWine } from "@/components/WineModal";
@@ -150,8 +151,12 @@ const Menu = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-charcoal to-olive-dark py-20 text-center">
-        <div className="container mx-auto px-4">
+      <section
+        className="relative py-20 text-center bg-cover bg-center"
+        style={{ backgroundImage: `url(${menuHeroImage})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/55 to-olive-dark/80" />
+        <div className="container mx-auto px-4 relative z-10">
           <h1 className="font-display text-5xl md:text-7xl text-cream mb-4 animate-fade-in">
             Il Nostro Menu
           </h1>
