@@ -1,48 +1,41 @@
 # Dei Frati Restaurant
 
-Full-stack project for a restaurant website.
+Full‑stack restaurant web app with a public site (home/menu/reservations/contact) and an admin area to manage menu items and wines.
 
-The website has a public area (home/menu/contact/reservations) and an admin area where you can manage menu items and wines.
+## Structure
 
-## What's inside
+- `frontend/` — React + TypeScript (Vite)
+- `backend/` — Node.js (Express) API + MySQL
 
-- `frontend/` - React + TypeScript (Vite)
-- `backend/` - Node.js + Express API + MySQL
+## Key features
 
-## How to run (dev)
+- Public pages: menu (food + wines), contact form, reservations
+- Admin panel: manage menu categories/items and wines
+- Image uploads: local (dev) or AWS S3 (production)
+- Health endpoint: `GET /api/health`
 
-### 1) Database
+## Run locally
 
-You need a MySQL database.
+### 1) Database (MySQL)
 
-Create a database (name used by default in the backend env):
+Create a database (example):
 
 ```sql
 CREATE DATABASE deifratilicenta;
 ```
 
-The backend creates the tables automatically on first run.
+The backend initializes tables automatically on first run.
 
 ### 2) Backend
 
 ```bash
 cd backend
 npm install
-```
-
-Copy env file and edit it:
-
-```bash
 copy .env.example .env
-```
-
-Then start:
-
-```bash
 npm run dev
 ```
 
-Backend runs on: http://localhost:5000
+API runs on `http://localhost:5000`.
 
 ### 3) Frontend
 
@@ -52,11 +45,33 @@ npm install
 npm run dev
 ```
 
-Frontend runs on: http://localhost:8080
+App runs on `http://localhost:8080` (admin at `/admin`).
 
-Admin page: http://localhost:8080/admin
+Tip: there are helper scripts at the repo root (`start-dev.bat`, `start-dev.sh`).
 
-## Notes
+## Environment variables (quick)
 
-- Frontend API URL can be changed with `VITE_API_URL` (example: `http://localhost:5000/api`).
-- Image upload works in 2 ways: local uploads (default in dev) or AWS S3 (if you configure S3 env vars in the backend).
+Frontend:
+
+- `VITE_API_URL` — API base URL (e.g. `http://localhost:5000/api`)
+
+Backend (common):
+
+- DB connection: Railway MySQL vars (`MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE`) or local `DB_HOST/DB_PORT/DB_USER/DB_PASSWORD/DB_NAME`
+- `JWT_SECRET` — required for admin auth
+- `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://gujuu.github.io`)
+- `UPLOAD_MAX_MB` — optional upload limit
+
+Optional (S3 uploads):
+
+- `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` (and `AWS_SESSION_TOKEN` if using temporary creds)
+- `AWS_S3_BUCKET`
+
+## Deployment
+
+- Frontend: GitHub Pages via workflow in `.github/workflows/`.
+- Backend + DB: Railway (set Railway Root Directory to `backend/` and attach a MySQL plugin).
+
+## License
+
+Private/unlicensed by default (add a license if you plan to open-source).
