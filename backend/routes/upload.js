@@ -1,5 +1,5 @@
 const express = require('express');
-const { upload, deleteImage } = require('../config/s3');
+const { upload, deleteImage, MAX_UPLOAD_MB } = require('../config/s3');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 const path = require('path');
 
@@ -45,7 +45,7 @@ router.post('/image', [authenticateToken, requireAdmin], async (req, res) => {
 
     // Common multer errors
     if (error?.code === 'LIMIT_FILE_SIZE') {
-      return res.status(413).json({ message: 'File too large (max 5MB)' });
+      return res.status(413).json({ message: `File too large (max ${MAX_UPLOAD_MB}MB)` });
     }
     if (/images only/i.test(message)) {
       return res.status(400).json({ message: 'Images only (jpeg/jpg/png/gif/webp)' });

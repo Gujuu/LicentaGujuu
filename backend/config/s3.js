@@ -4,6 +4,17 @@ const path = require('path');
 const fs = require('fs');
 const { getStorageDriver, buildObjectKey, deleteObject, createS3Client } = require('./mediaStorage');
 
+const getMaxUploadMb = () => {
+  const raw = process.env.UPLOAD_MAX_MB;
+  const parsed = raw ? Number(raw) : NaN;
+  if (!Number.isFinite(parsed) || parsed <= 0) return 5;
+  // Keep a reasonable bound to avoid accidental huge uploads
+  return Math.min(Math.max(parsed, 1), 50);
+};
+
+const MAX_UPLOAD_MB = getMaxUploadMb();
+const MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024;
+
 // Check file type
 const checkFileType = (file, cb) => {
   const filetypes = /jpeg|jpg|png|gif|webp/;
@@ -39,7 +50,7 @@ if (driver === 'local') {
 
   upload = multer({
     storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    limits: { fileSize: MAX_UPLOAD_BYTES },
     fileFilter: (req, file, cb) => {
       checkFileType(file, cb);
     },
@@ -71,7 +82,7 @@ if (driver === 'local') {
         cb(null, buildObjectKey({ folder, originalName: file.originalname, desiredBaseName }));
       },
     }),
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    limits: { fileSize: MAX_UPLOAD_BYTES },
     fileFilter: (req, file, cb) => {
       checkFileType(file, cb);
     },
@@ -88,4 +99,4 @@ if (driver === 'local') {
   };
 }
 
-module.exports = { upload, deleteImage };
+module.exports = { upload, deleteImage, MAX_UPLOAD_MB, MAX_UPLOAD_BYTES };
