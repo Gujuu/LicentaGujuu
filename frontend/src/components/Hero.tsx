@@ -53,9 +53,9 @@ const Hero = () => {
             </a>
           </Button>
           <Button variant="heroOutline" size="xl" asChild>
-            <a href="/menu">
+            <Link to="/menu">
               View Menu
-            </a>
+            </Link>
           </Button>
         </div>
         

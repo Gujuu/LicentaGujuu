@@ -37,3 +37,4 @@ backend/uploads/*
 
 # Railway (optional local files)
 .railway/
+dumpForRailway.sql

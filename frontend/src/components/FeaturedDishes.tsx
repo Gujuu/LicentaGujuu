@@ -2,6 +2,7 @@ import dishPasta from "@/assets/dish-pasta.jpg";
 import dishFish from "@/assets/dish-fish.jpg";
 import dishDessert from "@/assets/dish-dessert.jpg";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const FeaturedDishes = () => {
   const dishes = [
@@ -79,9 +80,9 @@ const FeaturedDishes = () => {
         {/* CTA */}
         <div className="text-center mt-12">
           <Button variant="elegant" size="lg" asChild>
-            <a href="/menu">
+            <Link to="/menu">
               View Full Menu
-            </a>
+            </Link>
           </Button>
         </div>
       </div>
