@@ -145,7 +145,7 @@ const FeaturedDishes = () => {
                 >
                   {dish.name}
                 </h3>
-                <p className="text-muted-foreground font-body text-sm leading-relaxed">
+                <p className="text-muted-foreground font-body text-sm leading-relaxed line-clamp-2 min-h-[2.75rem]">
                   {dish.description}
                 </p>
               </div>

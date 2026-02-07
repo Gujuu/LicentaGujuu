@@ -358,9 +358,9 @@ const MenuSection = ({ category, onItemClick }: MenuSectionProps) => {
           <button
             key={item.name}
             onClick={() => onItemClick(item)}
-            className="bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 group text-left cursor-pointer hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 group text-left cursor-pointer hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex flex-col h-full"
           >
-            <div className="relative h-56 overflow-hidden">
+            <div className="relative h-56 overflow-hidden shrink-0">
               <img
                 src={item.image}
                 alt={item.name}
@@ -372,7 +372,7 @@ const MenuSection = ({ category, onItemClick }: MenuSectionProps) => {
                 </span>
               </div>
             </div>
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-1">
               <div className="flex items-center justify-between mb-3">
                 <h3
                   className="font-display text-xl text-foreground min-h-[3.75rem]"
@@ -389,7 +389,7 @@ const MenuSection = ({ category, onItemClick }: MenuSectionProps) => {
                   {item.price}
                 </span>
               </div>
-              <p className="font-body text-muted-foreground text-sm leading-relaxed line-clamp-2">
+              <p className="font-body text-muted-foreground text-sm leading-relaxed line-clamp-2 min-h-[2.75rem]">
                 {item.description}
               </p>
             </div>
