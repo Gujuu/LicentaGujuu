@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
+import { Link } from "react-router-dom";
 
 const LOGO_URL =
   "https://deifrati-bucket-s3.s3.eu-central-1.amazonaws.com/media/site/logo/logo.png";
