@@ -81,6 +81,11 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Dei Frati API' });
 });
 
+// Base API route (useful for smoke tests when using an "/api" base URL)
+app.get('/api', (req, res) => {
+  res.json({ message: 'Dei Frati API', ok: true });
+});
+
 // Health check (useful for Railway and for verifying DB connectivity)
 app.get('/api/health', async (req, res) => {
   try {
