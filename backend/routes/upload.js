@@ -5,9 +5,20 @@ const path = require('path');
 
 const router = express.Router();
 
-// POST /api/upload/image - Upload image to S3 (admin only)
-router.post('/image', [authenticateToken, requireAdmin, upload.single('image')], async (req, res) => {
+const runSingleUpload = (req, res) => {
+  return new Promise((resolve, reject) => {
+    upload.single('image')(req, res, (err) => {
+      if (err) return reject(err);
+      return resolve();
+    });
+  });
+};
+
+// POST /api/upload/image - Upload image (admin only)
+router.post('/image', [authenticateToken, requireAdmin], async (req, res) => {
   try {
+    await runSingleUpload(req, res);
+
     if (!req.file) {
       return res.status(400).json({ message: 'No image file provided' });
     }
@@ -17,7 +28,12 @@ router.post('/image', [authenticateToken, requireAdmin, upload.single('image')],
     // - Local disk storage uses `req.file.filename`
     const imageUrl = req.file.location
       ? req.file.location
-      : `${req.protocol}://${req.get('host')}/uploads/${path.basename(req.file.filename)}`;
+      : (() => {
+          const forwardedProto = (req.get('x-forwarded-proto') || '').split(',')[0].trim();
+          const protocol = forwardedProto || req.protocol;
+          const host = req.get('x-forwarded-host') || req.get('host');
+          return `${protocol}://${host}/uploads/${path.basename(req.file.filename)}`;
+        })();
 
     res.json({
       message: 'Image uploaded successfully',
@@ -25,7 +41,20 @@ router.post('/image', [authenticateToken, requireAdmin, upload.single('image')],
       key: req.file.key || req.file.filename
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error uploading image', error: error.message });
+    const message = error?.message || 'Upload failed';
+
+    // Common multer errors
+    if (error?.code === 'LIMIT_FILE_SIZE') {
+      return res.status(413).json({ message: 'File too large (max 5MB)' });
+    }
+    if (/images only/i.test(message)) {
+      return res.status(400).json({ message: 'Images only (jpeg/jpg/png/gif/webp)' });
+    }
+    if (error?.code === 'ENOENT') {
+      return res.status(500).json({ message: 'Upload storage path missing on server' });
+    }
+
+    res.status(500).json({ message: 'Error uploading image', error: message });
   }
 });
 

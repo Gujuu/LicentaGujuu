@@ -1,6 +1,7 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const path = require('path');
+const fs = require('fs');
 const { getStorageDriver, buildObjectKey, deleteObject, createS3Client } = require('./mediaStorage');
 
 // Check file type
@@ -23,9 +24,12 @@ let deleteImage;
 
 if (driver === 'local') {
   // Use local storage for development
+  const uploadsDir = path.resolve(__dirname, '..', 'uploads');
+  fs.mkdirSync(uploadsDir, { recursive: true });
+
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/');
+      cb(null, uploadsDir);
     },
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);

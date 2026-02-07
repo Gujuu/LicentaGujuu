@@ -10,6 +10,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Railway (and most PaaS) run behind a proxy/load balancer
+app.set('trust proxy', 1);
+
 const parseAllowedOrigins = () => {
   const configured = process.env.CORS_ORIGINS;
   if (configured && configured.trim().length > 0) {
