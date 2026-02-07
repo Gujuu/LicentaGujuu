@@ -3,12 +3,36 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const parseMysqlUrl = (rawUrl) => {
+  if (!rawUrl) return null;
+
+  try {
+    const url = new URL(String(rawUrl));
+    if (url.protocol !== 'mysql:') return null;
+
+    return {
+      host: url.hostname,
+      port: url.port ? Number(url.port) : 3306,
+      user: decodeURIComponent(url.username || ''),
+      password: decodeURIComponent(url.password || ''),
+      database: url.pathname ? url.pathname.replace(/^\//, '') : undefined,
+    };
+  } catch {
+    return null;
+  }
+};
+
+const urlConfig =
+  parseMysqlUrl(process.env.MYSQL_URL) ||
+  parseMysqlUrl(process.env.DATABASE_URL) ||
+  parseMysqlUrl(process.env.CLEARDB_DATABASE_URL);
+
 const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-  user: process.env.DB_USER || 'app_user',
-  password: process.env.DB_PASSWORD || 'app_password',
-  database: process.env.DB_NAME || 'restaurant_db',
+  host: urlConfig?.host || process.env.DB_HOST || process.env.MYSQLHOST || 'localhost',
+  port: urlConfig?.port || (process.env.DB_PORT ? Number(process.env.DB_PORT) : process.env.MYSQLPORT ? Number(process.env.MYSQLPORT) : 3306),
+  user: urlConfig?.user || process.env.DB_USER || process.env.MYSQLUSER || 'app_user',
+  password: urlConfig?.password || process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || 'app_password',
+  database: urlConfig?.database || process.env.DB_NAME || process.env.MYSQLDATABASE || 'restaurant_db',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
