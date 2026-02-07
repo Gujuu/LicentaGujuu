@@ -373,7 +373,7 @@ const MenuSection = ({ category, onItemClick }: MenuSectionProps) => {
               </div>
             </div>
             <div className="p-6">
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center justify-between mb-3">
                 <h3
                   className="font-display text-xl text-foreground min-h-[3.5rem]"
                   style={{
