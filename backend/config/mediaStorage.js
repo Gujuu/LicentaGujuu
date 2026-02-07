@@ -130,12 +130,17 @@ const ensureFolderPlaceholder = async (folder) => {
 };
 
 const createS3Client = () => {
+  const cleanEnv = (value) => {
+    const v = (value ?? '').toString().trim();
+    return v.length ? v : undefined;
+  };
+
   return new S3Client({
     region: process.env.AWS_REGION,
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      sessionToken: (process.env.AWS_SESSION_TOKEN || '').trim() || undefined,
+      accessKeyId: cleanEnv(process.env.AWS_ACCESS_KEY_ID),
+      secretAccessKey: cleanEnv(process.env.AWS_SECRET_ACCESS_KEY),
+      sessionToken: cleanEnv(process.env.AWS_SESSION_TOKEN),
     },
   });
 };
