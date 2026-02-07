@@ -117,7 +117,7 @@ const FeaturedDishes = () => {
                 key={dish.name}
                 type="button"
                 onClick={() => setSelectedItem(dish)}
-                className="group bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500 text-left cursor-pointer hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="group bg-[hsl(var(--menu-card))] rounded-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500 text-left cursor-pointer hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
               {/* Image Container */}
               <div className="relative h-64 overflow-hidden">

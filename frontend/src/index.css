@@ -12,6 +12,9 @@
     --card: 40 25% 95%;
     --card-foreground: 30 10% 15%;
 
+    /* Menu cards (slightly darker with a subtle olive tint) */
+    --menu-card: 82 14% 92%;
+
     --popover: 40 30% 97%;
     --popover-foreground: 30 10% 15%;
 
@@ -71,6 +74,9 @@
 
     --card: 30 15% 12%;
     --card-foreground: 40 30% 95%;
+
+    /* Menu cards (subtle olive tint in dark mode) */
+    --menu-card: 82 12% 14%;
 
     --popover: 30 15% 10%;
     --popover-foreground: 40 30% 95%;
