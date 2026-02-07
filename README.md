@@ -21,7 +21,7 @@ Full‑stack restaurant web app with a public site (home/menu/reservations/conta
 Create a database (example):
 
 ```sql
-CREATE DATABASE deifratilicenta;
+CREATE DATABASE restaurant_db;
 ```
 
 The backend initializes tables automatically on first run.
@@ -71,7 +71,3 @@ Optional (S3 uploads):
 
 - Frontend: GitHub Pages via workflow in `.github/workflows/`.
 - Backend + DB: Railway (set Railway Root Directory to `backend/` and attach a MySQL plugin).
-
-## License
-
-Private/unlicensed by default (add a license if you plan to open-source).
