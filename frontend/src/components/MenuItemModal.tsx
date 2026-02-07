@@ -15,12 +15,20 @@ const MenuItemModal = ({ item, isOpen, onClose }: MenuItemModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 bg-card">
-        <div className="relative h-72 md:h-96 overflow-hidden">
-          <img
-            src={item.image}
-            alt={item.name}
-            className="w-full h-full object-cover"
-          />
+        <div className="relative h-[40vh] md:h-[50vh] max-h-[560px] overflow-hidden bg-charcoal flex items-center justify-center">
+          <a
+            href={item.image}
+            target="_blank"
+            rel="noreferrer"
+            className="block w-full h-full"
+            aria-label={`Open full-size image for ${item.name}`}
+          >
+            <img
+              src={item.image}
+              alt={item.name}
+              className="w-full h-full object-contain"
+            />
+          </a>
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <DialogHeader>
