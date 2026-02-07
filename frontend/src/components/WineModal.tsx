@@ -26,13 +26,21 @@ const WineModal = ({ wine, isOpen, onClose }: WineModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-card">
-        <div className="relative h-64 md:h-80 overflow-hidden">
-          <img
-            src={resolveBackendUrl(wine.image)}
-            alt={wine.name}
-            className="w-full h-full object-cover"
-          />
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 bg-card">
+        <div className="relative h-[40vh] md:h-[50vh] max-h-[560px] overflow-hidden bg-charcoal flex items-center justify-center">
+          <a
+            href={resolveBackendUrl(wine.image)}
+            target="_blank"
+            rel="noreferrer"
+            className="block w-full h-full"
+            aria-label={`Open full-size image for ${wine.name}`}
+          >
+            <img
+              src={resolveBackendUrl(wine.image)}
+              alt={wine.name}
+              className="w-full h-full object-contain"
+            />
+          </a>
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <DialogHeader>
