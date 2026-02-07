@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
-const { initDatabase } = require('./config/database');
+const { initDatabase, query } = require('./config/database');
 
 // Load environment variables
 dotenv.config();
@@ -79,6 +79,16 @@ app.use('/uploads', express.static('uploads'));
 // Routes
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Dei Frati API' });
+});
+
+// Health check (useful for Railway and for verifying DB connectivity)
+app.get('/api/health', async (req, res) => {
+  try {
+    await query('SELECT 1');
+    res.json({ ok: true, db: 'ok' });
+  } catch (error) {
+    res.status(503).json({ ok: false, db: 'unreachable' });
+  }
 });
 
 // Auth routes
