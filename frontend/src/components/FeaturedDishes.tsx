@@ -134,7 +134,15 @@ const FeaturedDishes = () => {
               
               {/* Content */}
               <div className="p-6">
-                <h3 className="font-display text-2xl text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                <h3
+                  className="font-display text-2xl text-foreground mb-2 group-hover:text-primary transition-colors duration-300 min-h-[4rem]"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 2,
+                    overflow: "hidden",
+                  }}
+                >
                   {dish.name}
                 </h3>
                 <p className="text-muted-foreground font-body text-sm leading-relaxed">

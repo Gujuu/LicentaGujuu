@@ -374,7 +374,15 @@ const MenuSection = ({ category, onItemClick }: MenuSectionProps) => {
             </div>
             <div className="p-6">
               <div className="flex items-start justify-between mb-3">
-                <h3 className="font-display text-xl text-foreground">
+                <h3
+                  className="font-display text-xl text-foreground min-h-[3.5rem]"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 2,
+                    overflow: "hidden",
+                  }}
+                >
                   {item.name}
                 </h3>
                 <span className="font-display text-lg text-primary whitespace-nowrap ml-4">
