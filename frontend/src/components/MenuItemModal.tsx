@@ -14,8 +14,8 @@ const MenuItemModal = ({ item, isOpen, onClose }: MenuItemModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-card">
-        <div className="relative h-64 md:h-80 overflow-hidden">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 bg-card">
+        <div className="relative h-72 md:h-96 overflow-hidden">
           <img
             src={item.image}
             alt={item.name}
